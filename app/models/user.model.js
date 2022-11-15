@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const History = new Schema({
+    measurement: {
+        type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    }
+});
+
 const User = new Schema({
     email: {
         type: String
@@ -16,7 +26,8 @@ const User = new Schema({
     },
     customerId:{
         type: String
-    }
+    },
+    history: [History],
 });
 
 module.exports = mongoose.model('users', User);
