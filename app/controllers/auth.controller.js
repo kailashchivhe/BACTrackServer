@@ -136,15 +136,6 @@ exports.newMeasurement = (req, res) => {
     );
   });
 };
-exports.getUserDetails = (req, res) => {
-  User.findOne({ email: req.params.email }, (err, user) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).json(user);
-    }
-  });
-};
 
 exports.getHistory = (req, res) => {
   User.aggregate(
