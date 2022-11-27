@@ -1,7 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
-const Item = db.item;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -13,12 +12,10 @@ exports.signup = (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
   });
-  //braintree.createCustomer(newUser, res);
   newUser.save((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
     } else {
-      console.log(user);
       res.status(200).send({ message: "User was registered successfully!" });
     }
   });
@@ -117,8 +114,8 @@ exports.verifyToken = (req, res, next) => {
 };
 
 exports.newMeasurement = (req, res) => {
-  User.findOne({ email: req.params.email }, (err, user) => {
-    var { measurement } = req.body;
+  User.findOne({ email: req.email }, (err, user) => {
+    var measurement = req.body.measurement;
     var date = new Date().toISOString().slice(0, 10);
     User.updateOne(
       { email: user.email },
@@ -147,16 +144,14 @@ exports.getHistory = (req, res) => {
       },
       {
         $match: {
-          email: req.params.email,
+          email: req.email,
         },
       },
       { $project: { history: 1 } },
     ],
     (err, data) => {
       if (err) {
-        console.log(err);
       } else {
-        console.log(data);
         res.status(200).send(data);
       }
     }

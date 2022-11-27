@@ -12,7 +12,6 @@ module.exports = function(app) {
     app.post("/api/auth/login", controller.login);
     app.get("/api/auth/profile", controller.verifyToken, controller.profile);
     app.post("/api/auth/profile", controller.verifyToken, controller.updateUser);
-    app.post("/newMeasurement/:email", controller.newMeasurement);
-    app.get("/getUser/:email", controller.getUserDetails);
-    app.get("/history/:email", controller.getHistory);
+    app.post("/newMeasurement", controller.verifyToken, controller.newMeasurement);
+    app.get("/history", controller.verifyToken, controller.getHistory);
 };

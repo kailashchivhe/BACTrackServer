@@ -30,4 +30,4 @@ const User = new Schema({
     history: [History],
 });
 
-module.exports = mongoose.model('users', User);
+module.exports = mongoose.model('BacTrackUser', User);
